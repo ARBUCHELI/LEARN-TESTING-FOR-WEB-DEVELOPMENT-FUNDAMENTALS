@@ -27,3 +27,203 @@ const {assert} = require('chai');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Feature Test Toolbelt
+-----------------------
+To write the most effective feature tests, we are going to employ a few additional tools. These tools are meant to support JavaScript testing. We will cover their uses in the scope of 
+building a feature test that drives implementation.
+
+
+* Chai
+------
+Node.js has a default assertion library that provides enough functionality to write basic test code. The Chai testing library extends the types of assertions we can make.
+
+Chai is an assertion library for Node.js and browsers that can be paired with any JavaScript testing framework.
+
+
+* Headless Browsers
+-------------------
+Headless browsers allow us to write tests that mimic user interaction and then evaluate the results. They do not require us to render the application in a visible browser window.
+
+A browser runs “headless” when it doesn’t render anything to the screen, but runs in the background.
+
+Note: For the exercises in this lesson, we will be using Chrome in headless mode.
+
+
+* WebdriverI/O
+--------------
+WebdriverIO provides methods that allow us to programmatically interact with the user-facing elements of our app in a headless browser.
+
+
+* Toolbelt High-Level Summary
+-----------------------------
+A headless browser allows us to run tests that mimic user interaction with a web application. WebdriverIO provides the methods to interact with browser values programmatically. We can 
+make assertions against these tests using the Chai assertion library.
+
+
+* Instructions
+--------------
+In your user-visits-root-test.js file notice the first line of code, which makes Chai’s assertion library available for us to use in our tests.
+
+const {assert} = require("chai")
+
+
+user-visits-root-test.js
+------------------------
+const {assert} = require ('chai');
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Feature Test I
+----------------
+Feature tests exercise behavior by simulating a user navigating the application in a web browser.
+
+Imagine we wanted to create a simple web-based poetry writing application.
+
+The first feature test we want to write is to check our application’s empty state. The functionality we want to test is:
+
+	. When a user visits the homepage, the poems section is empty
+
+We want to make sure that when there are no poems in the database, there are no poems rendered on the homepage. This is the application’s empty state.
+
+The testing suite for our poetry app would begin with nested describe blocks like this:
+
+describe('Poetry web app', () => {
+  describe('user visits root', () => {
+
+  });
+});
+
+The term ‘root’, refers to our application’s entry point, which in this example is the home page that users will visit in their browser.
+
+Next, we add an it block to describe the behavior we want to test in our app:
+
+describe('Poetry web app', () => {
+  describe('user visits root', () => {
+    it('page starts blank', () => {
+
+    });  
+  });
+});
+
+When a user visits the root of our app, they should have a blank page on which to write their own poem.
+
+
+* The Plumbing
+--------------
+Next, we reach for our feature testing toolbelt. We start by using the global browser variable that is provided by WebdriverI/O.
+
+The browser variable is powerful because it gives us access to the browser that Phantom is running in the background. We can simulate a user interacting with our website by calling 
+different methods on the global browser variable in our test suite.
+
+For example, we can use browser.url() to simulate a user visiting the home page of our application, which is the first behavior we want to test.
+
+The .url method navigates to the URL that is passed to it as an argument. The following line of code would navigate to the Codecademy website in the Phantom browser.
+
+browser.url('https://www.codecademy.com')
+
+In the case of our poetry web app, we will pass in '/' as the argument, which will point the browser to the root file of our project, which in this case is our index.html.
+
+The code would look like this:
+
+describe('poetry web app', () => {
+  describe('user visits root', () => {
+    it('page starts blank', () => {
+      browser.url('/');
+    });  
+  });
+});
+
+
+* Instructions
+--------------
+1.
+Imagine you are a developer working on a project that includes creating a web application with a message feature.
+
+The first feature you want to test in your web app is that no messages appear on the page when a user visits the project root.
+
+	. Inside the describe blocks in user-visits-root-test.js file, write an it block with the string: starts blank, and an empty callback function.
+
+An it block has two parameters. The first is a string that describes expected behavior, and the second is a callback function.
+
+it('does something', () => {})
+
+Checkpoint 2 Passed
+2.
+Inside the it block, call the .url() method on the global browser variable and pass '/' as the argument.
+
+In the terminal, execute the command npm test, you should see a passing test!
+
+user-visits-root-test.js
+------------------------
+const {assert} = require('chai');
+
+describe('User visits root', () => {
+  describe('without existing messages', () => {
+    it('starts blank', () => {
+      browser.url('/');
+    });
+  });
+});
+
+
+bash
+----
+$ npm test
+
+> calculator-js@0.0.0 test /home/ccuser/workspace/tdd-feature-test-feature-test-i
+> PORT=8001 bin/wdio-test
+
+GET / 200 5.380 ms - -
+------------------------------------------------------------------
+[phantomjs #0-0] Session ID: 22533ea0-3981-11ef-b95c-5b3735409ddb
+[phantomjs #0-0] Spec: /home/ccuser/workspace/tdd-feature-test-feature-test-i/test/features/user-visits-root-test.js
+[phantomjs #0-0] Running: phantomjs
+[phantomjs #0-0]
+[phantomjs #0-0] User visits root
+[phantomjs #0-0]
+[phantomjs #0-0] without existing messages
+[phantomjs #0-0]   ✓ starts blank
+[phantomjs #0-0]
+[phantomjs #0-0]
+[phantomjs #0-0] 1 passing (0s)
+[phantomjs #0-0]
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
